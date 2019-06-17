@@ -49,7 +49,39 @@ if(!empty($_GET['search'])){
 		<div class="row">
 			<div class="col-sm-12">
 				<br>
-				<h2>We found <?=$count?> student(s)</h2>
+				<h2>We found <?=$count?> student<?php if($count != 1){ echo "s";}	?>
+					</h2>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>RFID</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($results as $r) { ?>
+							<tr>
+								<td><?=$r->id?></td>
+								<td><?=$r->fname?></td>
+								<td><?=$r->lname?></td>
+								<td><?=$r->rfid?></td>
+							</tr>
+						<?php } ?>
+
+
+
+
+
+
+					</tbody>
+				</table>
+
+
+
+
 				<?php dump($results);?>
 			</div>
 		</div>
