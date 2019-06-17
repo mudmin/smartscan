@@ -23,7 +23,12 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
 ?>
 
 <?php
-//php goes here
+if(!empty($_GET['search'])){
+	$searchTerm = Input::get('search');
+	$query = $db->query("SELECT * FROM students WHERE fname = ? OR lname = ? OR rfid = ?",[$searchTerm,$searchTerm,$searchTerm]);
+	$count = $query->count();
+	$results = $query->results();
+}
 ?>
 		<div class="row">
 			<div class="col-sm-3">
@@ -38,4 +43,15 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
 			</div>
 		</div>
 
+	<?php
+	if(!empty($_GET['search'])){
+		?>
+		<div class="row">
+			<div class="col-sm-12">
+				<br>
+				<h2>We found <?=$count?> student(s)</h2>
+				<?php dump($results);?>
+			</div>
+		</div>
+	<?php } ?>
 <?php require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php'; ?>
