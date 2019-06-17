@@ -23,11 +23,17 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
 ?>
 
 <?php
-//php goes here
+if(!empty($_POST)){
+processForm();
+Redirect::to('new_student.php?err=Student Added');
+}
 ?>
 		<div class="row">
 			<div class="col-sm-12">
-
+				<h2>New Student</h2>
+				<?php
+				displayForm('students');
+				 ?>
 			</div>
 		</div>
 
