@@ -23,25 +23,18 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
 ?>
 
 <?php
-if(!empty($_POST)){
-processForm();
-Redirect::to('new_student.php?err=Student Added');
-}
+//php goes here
 ?>
 		<div class="row">
-			<div class="col-sm-12">
-				<h2>New Student</h2>
-				<?php
-				displayForm('students');
-				 ?>
+			<div class="col-sm-3">
+
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<h2>Existing Students</h2>
-				<?php
-				displayTable('students');
-				 ?>
+			<div class="col-sm-6">
+				<br>
+				<form class="" action="" method="get">
+					<input type="text" name="search" value="" required autofocus="on" placeholder="Search Here!">
+					<input type="submit" name="submit" value="Go!">
+				</form>
 			</div>
 		</div>
 
