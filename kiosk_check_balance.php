@@ -23,36 +23,30 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
 ?>
 
 <?php
-if(!empty($_POST)){
-$rfid = Input::get('rfid');
-$check = $db->query("SELECT * FROM students WHERE rfid = ?",[$rfid])->count();
-		if($check < 1){
-		processForm();
-		$fname = Input::get('fname');
-		$lname = Input::get('lname');
-		$balance = Input::get('balance');
-		logger($user->data()->id, "Money", "Added new user $fname $lname with a balance of $balance.");
-		Redirect::to('new_student.php');
+if(!empty($_GET['search'])){
+	$searchTerm = Input::get('search');
+	$query = $db->query("SELECT balance FROM students WHERE rfid = ?",[$searchTerm]);
+	$count = $query->count();
+	$results = $query->first();
+	if($count > 0){
+		Redirect::to("kiosk_check_balance.php?err=Your+balance+is+$".$results->balance);
 	}else{
-		err("STUDENT NOT ADDED - This RFID code is already in use");
+		Redirect::to("kiosk_check_balance.php?err=Not+found");
 	}
 }
 ?>
-		<div class="row">
-			<div class="col-sm-12">
-				<h2>New Student</h2>
-				<?php
-				displayForm('students');
-				 ?>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<h2>Existing Students</h2>
-				<?php
-				displayTable('students');
-				 ?>
-			</div>
-		</div>
+<div class="row">
+	<div class="col-sm-3">
+
+	</div>
+	<div class="col-sm-6">
+		<br>
+		<form class="" action="" method="get">
+			<input type="text" name="search" value="" required autofocus="on" placeholder="Scan Your Tag!">
+			<input type="submit" name="submit" value="Go!">
+		</form>
+	</div>
+</div>
+
 
 <?php require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php'; ?>
