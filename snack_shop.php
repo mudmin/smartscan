@@ -24,7 +24,31 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
 
 <?php
 if(!empty($_POST)){
-	dump($_POST);
+	$amount = Input::get('amount');
+	$amount = number_format($amount, 2, '.', '');
+	dump($amount);
+	$rfid = Input::get('rfid');
+
+	$studentQ = $db->query("SELECT * FROM students WHERE rfid = ?",[$rfid]);
+	$studentC = $studentQ->count();
+
+	if($studentC > 0){
+		$student = $studentQ->first();
+
+		if($student->balance >= $amount){
+			echo "YES!";
+		}else{
+			echo "Nooooooo";
+		}
+
+
+
+
+
+
+	}else{
+		err("NO SALE - Not Found");
+	}
 }
 ?>
 		<div class="row">
