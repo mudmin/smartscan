@@ -24,8 +24,14 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
 
 <?php
 if(!empty($_POST)){
-processForm();
-Redirect::to('new_student.php?err=Student Added');
+$rfid = Input::get('rfid');
+$check = $db->query("SELECT * FROM students WHERE rfid = ?",[$rfid])->count();
+		if($check < 1){
+		processForm();
+		Redirect::to('new_student.php');
+	}else{
+		err("STUDENT NOT ADDED - This RFID code is already in use");
+	}
 }
 ?>
 		<div class="row">

@@ -30,60 +30,50 @@ if(!empty($_GET['search'])){
 	$results = $query->results();
 }
 ?>
-		<div class="row">
-			<div class="col-sm-3">
+<div class="row">
+	<div class="col-sm-3">
 
-			</div>
-			<div class="col-sm-6">
-				<br>
-				<form class="" action="" method="get">
-					<input type="text" name="search" value="" required autofocus="on" placeholder="Search Here!">
-					<input type="submit" name="submit" value="Go!">
-				</form>
-			</div>
-		</div>
+	</div>
+	<div class="col-sm-6">
+		<br>
+		<form class="" action="" method="get">
+			<input type="text" name="search" value="" required autofocus="on" placeholder="Search Here!">
+			<input type="submit" name="submit" value="Go!">
+		</form>
+	</div>
+</div>
 
-	<?php
-	if(!empty($_GET['search'])){
-		?>
-		<div class="row">
-			<div class="col-sm-12">
-				<br>
-				<h2>We found <?=$count?> student<?php if($count != 1){ echo "s";}	?>
-					</h2>
-
-				<table class="table table-striped">
-					<thead>
+<?php
+if(!empty($_GET['search'])){
+	?>
+	<div class="row">
+		<div class="col-sm-12">
+			<br>
+			<h2>We found <?=$count?> student<?php if($count != 1){ echo "s";}	?>
+			</h2>
+			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>RFID</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($results as $r) { ?>
 						<tr>
-							<th>ID</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>RFID</th>
+							<td><?=$r->id?></td>
+							<td><?=$r->fname?></td>
+							<td><?=$r->lname?></td>
+							<td><?=$r->rfid?></td>
 						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($results as $r) { ?>
-							<tr>
-								<td><?=$r->id?></td>
-								<td><?=$r->fname?></td>
-								<td><?=$r->lname?></td>
-								<td><?=$r->rfid?></td>
-							</tr>
-						<?php } ?>
+					<?php } ?>
+				</tbody>
+			</table>
 
-
-
-
-
-
-					</tbody>
-				</table>
-
-
-
-
-				<?php dump($results);?>
-			</div>
 		</div>
-	<?php } ?>
+	</div>
+<?php } ?>
 <?php require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php'; ?>
