@@ -42,11 +42,19 @@ if(!empty($_GET['search'])){
 	<div class="col-sm-6">
 		<br>
 		<form class="" action="" method="get">
-			<input type="text" name="search" value="" required autofocus="on" placeholder="Scan Your Tag!">
+			<p align="center">
+			<input type="password" name="search" value="" required autofocus="on" placeholder="Scan Your Tag!">
 			<input type="submit" name="submit" value="Go!">
+			</p>
 		</form>
 	</div>
 </div>
-
+<?php
+$message = Input::get("err");
+if($message != ""){ ?>
+	<script type="text/javascript">
+		setTimeout("location.href = 'kiosk_check_balance.php';",5000);
+	</script>
+<?php }  ?>
 
 <?php require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php'; ?>
