@@ -18,23 +18,27 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 require_once 'users/init.php';
-require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
-if (!securePage($_SERVER['PHP_SELF'])){die();}
-?>
+require_once 'users/views/_kiosk_mode.php';
+if (!securePage($_SERVER['PHP_SELF'])){die();} ?>
 
 <?php
+
 if(!empty($_GET['search'])){
 	$searchTerm = Input::get('search');
 	$query = $db->query("SELECT balance FROM students WHERE rfid = ?",[$searchTerm]);
 	$count = $query->count();
 	$results = $query->first();
 	if($count > 0){
+
+		logger(1, "Balance", "A balance was checked");
 		Redirect::to("kiosk_check_balance.php?err=Your+balance+is+$".$results->balance);
+
 	}else{
 		Redirect::to("kiosk_check_balance.php?err=Not+found");
 	}
 }
 ?>
+
 <div class="row">
 	<div class="col-sm-3">
 

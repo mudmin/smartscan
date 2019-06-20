@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 require_once 'users/init.php';
-require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
+require_once 'users/views/_kiosk_mode.php';
 if (!securePage($_SERVER['PHP_SELF'])){die();}
 ?>
 
@@ -63,12 +63,14 @@ if($persona != ""  && $personb != ""){
 	}
 
 	if($found == true){
+
 		$winner = rand(0,1);
 		if($winner == 0){
 			$winner = $a->fname." ".$a->lname;
 		}else{
 			$winner = $b->fname." ".$b->lname;
 		}
+		logger(1, "Argue", "$winner won an arguement");
 		// dump($winner);
 	}else{
 		Redirect::to("argue.php?err=One+or+more+badges+not+found");

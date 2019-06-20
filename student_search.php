@@ -28,6 +28,7 @@ if(!empty($_GET['search'])){
 	$query = $db->query("SELECT * FROM students WHERE fname = ? OR lname = ? OR rfid = ?",[$searchTerm,$searchTerm,$searchTerm]);
 	$count = $query->count();
 	$results = $query->results();
+	logger($user->data()->id, "Search", "Searched for $searchTerm");
 }
 ?>
 <div class="row">
@@ -51,7 +52,7 @@ if(!empty($_GET['search'])){
 			<br>
 			<h2>We found <?=$count?> student<?php if($count != 1){ echo "s";}	?>
 			</h2>
-			
+
 			<table class="table table-striped">
 				<thead>
 					<tr>
