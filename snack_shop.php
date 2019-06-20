@@ -26,7 +26,7 @@ if (!securePage($_SERVER['PHP_SELF'])){die();}
 if(!empty($_POST)){
 	$amount = Input::get('amount');
 	$amount = number_format($amount, 2, '.', '');
-	dump($amount);
+
 	$rfid = Input::get('rfid');
 
 	$studentQ = $db->query("SELECT * FROM students WHERE rfid = ?",[$rfid]);
@@ -36,16 +36,31 @@ if(!empty($_POST)){
 		$student = $studentQ->first();
 
 		if($student->balance >= $amount){
-			echo "YES!";
+
+			$fields = array(
+				"student"						=>$student->id,
+				"done_by"						=>$user->data()->id,
+				"amount"						=>$amount,
+				"date_created"			=>date("Y-m-d H:i:s"),
+				"transaction_type"	=>1,
+			);
+			$db->insert("transactions",	$fields);
+
+			$newBalance = $student->balance - $amount;
+			$newBalance = number_format($newBalance, 2, '.', '');
+			$fields = array(
+				"balance"=>$newBalance,
+			);
+			$db->update("students",$student->id,$fields);
+
+			Redirect::to("snack_shop.php?err=".$student->fname." was charged $".$amount.". New Bal:$".$newBalance);
+
+
+
+
 		}else{
-			echo "Nooooooo";
+			err("NO SALE - Low Balance");
 		}
-
-
-
-
-
-
 	}else{
 		err("NO SALE - Not Found");
 	}
