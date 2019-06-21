@@ -82,22 +82,24 @@ if($persona != ""  && $personb != ""){
 
 ?>
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6">
 				<br>
 				<h1 align="center">Argument Settler</h1>
 
 				<form class="" action="argue.php?err=" method="post">
 					<br><br>
 					<?php if($persona == ""){ ?>
-					<h3 align="center">Person ONE, Scan Your Badge!</h3>
+					<h3 align="center">Person <font color="red">ONE</font>, Scan Your Badge!</h3>
 					<p align="center">
-					<input type="password" name="persona" value="" autofocus="on">
-					<input type="submit" name="submit" value="Scan Your Badge!">
+					<input class="form-control" type="password" name="persona" value="" autofocus="on">
+					<br>
+					<input type="submit" name="submit" value="Scan Your Badge!" class="btn btn-primary">
 					</p>
 				<?php } ?>
 
 				<?php if($persona != "" && $personb == ""){ ?>
-				<h3 align="center">Person TWO, Scan Your Badge!</h3>
+				<h3 align="center">Person <font color="red">TWO</font>, Scan Your Badge!</h3>
 				<p align="center">
 				<strong>
 					<font color="red">
@@ -108,8 +110,9 @@ if($persona != ""  && $personb != ""){
 				</font>
 				</strong>
 				<input type="hidden" name="persona" value="<?=$persona?>">
-				<input type="password" name="personb" value="" autofocus="on">
-				<input type="submit" name="submit" value="Scan Your Badge!">
+				<input class="form-control" type="password" name="personb" value="" autofocus="on">
+				<br>
+				<input type="submit" name="submit" value="Scan Your Badge!" class="btn btn-primary">
 				</p>
 			<?php } ?>
 				</form>
@@ -131,4 +134,4 @@ if($persona != ""  && $personb != ""){
 			</div>
 		</div>
 
-<?php require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php'; ?>
+<?php //require_once $abs_us_root . $us_url_root . 'users/includes/html_footer.php'; ?>

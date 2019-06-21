@@ -35,7 +35,7 @@ $search = 	$db->query("SELECT id FROM logs WHERE logtype = ?",["Search"])->count
 <?php if(hasPerm([2,3],$user->data()->id)){?>
 				<!-- Add Student Card -->
 					<div class="card col-12 col-sm-6 col-md-4">
-						<h3 class="card-header"><strong><a href="new_student.php">Add Students</strong></h3>
+						<h3 class="card-header"><strong><a href="students.php">Manage Students</strong></h3>
 							<div class="card-body">
 								<h4 class="card-title text-center"><div class="huge"> <i class='fa fa-user-plus fa-1x'></i></div></h4>
 							</div>

@@ -16,4 +16,7 @@ err($err);
   .container{
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   }
+
+  h1{color:white; font-size:4em;}
+  h3{color:white; }
 </style>

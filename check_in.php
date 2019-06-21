@@ -23,18 +23,19 @@ if (!securePage($_SERVER['PHP_SELF'])){die();} ?>
 
 <?php
 
-if(!empty($_GET['search'])){
-	$searchTerm = Input::get('search');
-	$query = $db->query("SELECT balance FROM students WHERE rfid = ?",[$searchTerm]);
+if(!empty($_POST['rfid'])){
+	$rfid = Input::get('rfid');
+	$query = $db->query("SELECT id,fname,lname FROM students WHERE rfid = ?",[$rfid]);
 	$count = $query->count();
-	$results = $query->first();
-	if($count > 0){
 
-		logger(1, "Balance", "A balance was checked");
-		Redirect::to("kiosk_check_balance.php?err=Your+balance+is+$".$results->balance);
+	if($count > 0){
+		$student = $query->first();
+		$db->update("students",$student->id,['checked_in'=>1]);
+		logger(1, "CICO", "$student->fname $student->lname checked in");
+		Redirect::to("check_in.php?err=".$student->fname." checked in");
 
 	}else{
-		Redirect::to("kiosk_check_balance.php?err=Not+found");
+		Redirect::to("check_in.php?err=Not+found");
 	}
 }
 ?>
@@ -46,10 +47,10 @@ if(!empty($_GET['search'])){
 	<div class="col-sm-6">
 		<!-- <img src="users/images/logo.png" alt=""> -->
 		<br>
-		<h1 class="text-center">Check Your Balance</h1>
-		<form class="" action="" method="get">
+		<h1 class="text-center">Check In Here!</h1>
+		<form class="" action="" method="post">
 			<p align="center">
-			<input class="form-control" type="password" name="search" value="" required autofocus="on" placeholder="Scan Your Tag!">
+			<input class="form-control" type="password" name="rfid" value="" required autofocus="on" placeholder="Scan Your Tag!">
 			<br>
 			<input class="btn btn-primary" type="submit" name="submit" value="Go!">
 			</p>
@@ -60,7 +61,7 @@ if(!empty($_GET['search'])){
 $message = Input::get("err");
 if($message != ""){ ?>
 	<script type="text/javascript">
-		setTimeout("location.href = 'kiosk_check_balance.php';",5000);
+		// setTimeout("location.href = 'kiosk_check_balance.php';",5000);
 	</script>
 <?php }  ?>
 

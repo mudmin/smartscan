@@ -21,3 +21,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //Put your custom functions in this file and they will be automatically included.
 
 //bold("<br><br>custom helpers included");
+
+function cico($number){
+  if($number == 0){
+    echo "Checked Out";
+  }elseif($number == 1){
+    echo "<font color='green'><strong>Checked In</strong></font>";
+  }else{
+    echo "<font color='blue'>unknown</font>";
+  }
+}
+
+function echoStudent($id){
+  $db = DB::getInstance();
+  $q = $db->query("SELECT fname,lname FROM students WHERE id = ?",[$id]);
+  $c = $q->count();
+  if($c > 0){
+    $student = $q->first();
+    echo $student->fname." ".$student->lname;
+  }else{
+    echo "Unknown Student";
+  }
+}
