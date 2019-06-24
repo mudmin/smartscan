@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 require_once 'users/init.php';
 require_once $abs_us_root.$us_url_root.'users/includes/template/prep.php';
 if (!securePage($_SERVER['PHP_SELF'])){die();}
+die("This does not log the initial funds");
 ?>
 
 <?php
@@ -31,6 +32,14 @@ $check = $db->query("SELECT * FROM students WHERE rfid = ?",[$rfid])->count();
 		$fname = Input::get('fname');
 		$lname = Input::get('lname');
 		$balance = Input::get('balance');
+		$fields = array(
+			"student"						=>$id,
+			"done_by"						=>$user->data()->id,
+			"amount"						=>$balance,
+			"date_created"			=>date("Y-m-d H:i:s"),
+			"transaction_type"	=>3,
+		);
+		$db->insert("transactions",	$fields);
 		logger($user->data()->id, "Money", "Added new user $fname $lname with a balance of $balance.");
 		Redirect::to('new_student.php');
 	}else{

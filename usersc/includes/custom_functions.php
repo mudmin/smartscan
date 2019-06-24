@@ -43,3 +43,26 @@ function echoStudent($id){
     echo "Unknown Student";
   }
 }
+
+function echoReason($id){
+  $db = DB::getInstance();
+  $q = $db->query("SELECT * FROM transaction_types WHERE id = ?",[$id]);
+  $c = $q->count();
+  if($c > 0){
+    $d = $q->first();
+    echo $d->description;
+  }else{
+    echo "unknown";
+  }
+}
+
+function moneyrfid($ugly){
+	$ugly = number_format($ugly,2,'.',',');
+  if($ugly > 0){
+    echo "<font color='green'>$ugly</font>";
+  }elseif($ugly < 0){
+    echo "<font color='red'>$ugly</font>";
+  }else{
+    echo "<font color='blue'>$ugly</font>";
+  }
+}

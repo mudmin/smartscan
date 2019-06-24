@@ -32,6 +32,8 @@ $student = $studentQ->first();
 $searchTerm = Input::get('search');
 Redirect::to("students.php?err=Student+not+found&search=".$searchTerm);
 }
+
+$transactions = $db->query("SELECT * FROM transactions WHERE student = ? ORDER BY id DESC",[$id])->results();
 ?>
 		<div class="row">
 			<div class="col-sm-12">
@@ -57,8 +59,28 @@ Redirect::to("students.php?err=Student+not+found&search=".$searchTerm);
 				//then call your form with
 
 				displayform('students',['update'=>$id,'skip'=>['balance']]);
-
 				?>
+
+				<table class="table table-striped paginate">
+					<thead>
+						<tr>
+							<th>Done By</th>
+							<th>Amount</th>
+							<th>Date</th>
+							<th>Type</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($transactions as $t){?>
+							<tr>
+								<td><?php echouser($t->done_by);?></td>
+								<td><?php moneyrfid($t->amount);?></td>
+								<td><?=$t->date_created?></td>
+								<td><?php echoReason($t->transaction_type);?></td>
+							</tr>
+						<?php }?>
+					</tbody>
+				</table>
 			</div>
 		</div>
 

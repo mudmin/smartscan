@@ -40,7 +40,7 @@ if(!empty($_POST)){
 			$fields = array(
 				"student"						=>$student->id,
 				"done_by"						=>$user->data()->id,
-				"amount"						=>$amount,
+				"amount"						=>($amount)*-1,
 				"date_created"			=>date("Y-m-d H:i:s"),
 				"transaction_type"	=>1,
 			);

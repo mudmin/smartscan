@@ -28,10 +28,21 @@ $rfid = Input::get('rfid');
 $check = $db->query("SELECT * FROM students WHERE rfid = ?",[$rfid])->count();
 		if($check < 1){
 		processForm();
+		$studentid = $db->lastId();
 		$fname = Input::get('fname');
 		$lname = Input::get('lname');
 		$balance = Input::get('balance');
 		logger($user->data()->id, "Money", "Added new user $fname $lname with a balance of $balance.");
+
+		$fields = array(
+			"student"						=>$studentid,
+			"done_by"						=>$user->data()->id,
+			"amount"						=>$balance,
+			"date_created"			=>date("Y-m-d H:i:s"),
+			"transaction_type"	=>3,
+		);
+		$db->insert("transactions",	$fields);
+
 		Redirect::to('students.php');
 	}else{
 		err("STUDENT NOT ADDED - This RFID code is already in use");

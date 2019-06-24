@@ -40,6 +40,17 @@ if(!empty($_POST)){
 	$newamount = number_format($newamount, 2, '.', '');
 	logger($user->data()->id,"Add Money","Added $amount to balance. New Bal:$newamount");
 	$db->update("students",$id,['balance'=>$newamount]);
+
+
+	$fields = array(
+		"student"						=>$id,
+		"done_by"						=>$user->data()->id,
+		"amount"						=>$amount,
+		"date_created"			=>date("Y-m-d H:i:s"),
+		"transaction_type"	=>3,
+	);
+	$db->insert("transactions",	$fields);
+	Redirect::to("student_add_funds.php?id=".$id."&search=".$searchTerm."&err=Funds+added!");
 }
 
 ?>
